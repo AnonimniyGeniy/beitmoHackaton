@@ -20,9 +20,3 @@ def generate_recommendations(person, events):
     recommendations = [choice['text'].strip() for choice in response.choices]
     return recommendations
 
-
-# Example usage
-person_info = "John Doe"
-available_events = ["Event A", "Event B", "Event C", "Event D"]
-
-
