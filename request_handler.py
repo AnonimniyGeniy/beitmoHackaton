@@ -26,7 +26,7 @@ def generate_recommendations(person, events):
     # prompt = f"Person: {person}\nAvailable events: {events}\nGenerate event recommendations in a bullet list format."
     #prompt += person.__str__()
     #prompt = f"Person: {person}\nAvailable events: {events}\nGenerate event recommendations in a bullet list format."
-    prompt = f"Person: {person}\nAvailable events: {events}\nGenerate event recommendations in a bullet list format. Leave event names unchanged.\n"
+    prompt = f"Person: {person}\nAvailable events: {events}\nGenerate event recommendations in a bullet list format. Leave event names unchanged.\nLeave only relevant events for specific person.\n"
     print(prompt)
     response = openai.Completion.create(
         engine='text-davinci-003',

@@ -25,7 +25,7 @@ class Person:
         if len(job_list) > 1:
             job_list = job_list[:2]
         self.job = "".join(job_list)
-        self.powers = powers
+        self.powers = ''
         self.publications = ''
         self.projects = projects
         self.events = events
@@ -52,7 +52,10 @@ def get_people():
         projects = []
         for event in events_data.iterrows():
             if event[1]["ИСУ"] == isu:
-                events.append(list(event[1]))
+                events.append(event[1]["Наименование"])
+                events[-1] += (event[1]["Роли"])
+
+        #print(events)
         for article in articles_data.iterrows():
             if article[1]["ИСУ"] == isu:
                 articles.append(article[1]["ВЫХОДНЫЕ_ДАННЫЕ"])
