@@ -14,12 +14,11 @@ def main():
     events = []
     for line in open('data/events.txt', 'r', encoding='utf-8'):
         events.append(line.strip())
-
+    #print(events)
     recommendations = request_handler.generate_recommendations(str(people[0]), events)
     for i in recommendations:
         print(i)
-    for i, recommendation in enumerate(recommendations):
-        print(f"Recommendation {i + 1}: {recommendation}")
+
 
 
 # Press the green button in the gutter to run the script.

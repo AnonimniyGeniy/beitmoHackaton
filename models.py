@@ -2,7 +2,7 @@ import pandas as pd
 import data_handler as dh
 
 
-class Svinota:
+class Person:
     isu = None
     name = None
     education = None
@@ -15,14 +15,24 @@ class Svinota:
     def __init__(self, name, education, job, powers, isu, publications, projects, events):
         self.isu = isu
         self.name = name
+        education = list(education.split(","))
+        if len(education) > 4:
+            education = education[4:]
+        education = ", ".join(education)
         self.education = education
-        self.job = job
+
+        job_list = list(str(job).split(","))
+        if len(job_list) > 1:
+            job_list = job_list[:2]
+        self.job = "".join(job_list)
         self.powers = powers
-        self.publications = publications
+        self.publications = ''
         self.projects = projects
         self.events = events
+
     def __str__(self):
         return f"{self.education} {self.job} {self.powers}{self.publications} {self.projects} {self.events}"
+
 
 def get_people():
     people_data = dh.get_people_data()
@@ -45,11 +55,17 @@ def get_people():
                 events.append(list(event[1]))
         for article in articles_data.iterrows():
             if article[1]["ИСУ"] == isu:
-                articles.append(list(article[1]))
+                articles.append(article[1]["ВЫХОДНЫЕ_ДАННЫЕ"])
+        #print(articles)
+
+
         for project in projects_data.iterrows():
             if project[1]["ИСУ"] == isu:
-                projects.append(list(project[1]))
-        people.append(Svinota(name, education, job, powers, isu, articles, projects, events))
+                add = project[1]["Наименование"] + " "
+                add += str(project[1]["Ключевые слова"])
+                add += str(project[1]["Роль"])
+                projects.append(add)
+        people.append(Person(name, education, job, powers, isu, articles, projects, events))
     return people
 
 
