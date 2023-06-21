@@ -20,7 +20,7 @@ def main():
     # recommendations = request_handler.generate_recommendation(str(people[0]), events)
     # for i in recommendations:
     #     print(i)
-    recommendations = request_handler.generate_recommendations(people[:1], events)
+    recommendations = request_handler.generate_recommendations(people, events)
     for i in recommendations:
         print(i)
 
