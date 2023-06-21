@@ -31,7 +31,8 @@ def generate_recommendations(persons, events):
     messages = [
         {"role": "system",
          "content": "Generate event recommendations for each provided person in a bullet list format. Leave event "
-                    "names unchanged.\nLeave 4 most relevant events for specific person."},
+                    "names unchanged.\nLeave 4 most relevant events for specific person. Leave only event names list in "
+                    "answer."},
         {"role": "system", "content": f"Available events: {events}"},
     ]
     recommendations = []
@@ -45,9 +46,9 @@ def generate_recommendations(persons, events):
             n=1,
             timeout=60  # Увеличение времени ожидания ответа до 60 секунд
         )
-        recommendations += [persons.index(person), [choice['message']['content'] for choice in response.choices]]
-        print(recommendations[-1])
-        time.sleep(20)
+        recommendations += [{persons.index(person): [choice['message']['content'] for choice in response.choices]}]
+        #print(recommendations[-1])
+        #time.sleep(20)
 
         messages = [
         {"role": "system",
