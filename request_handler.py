@@ -1,6 +1,7 @@
 import openai
 import models
 import time
+
 # Set up OpenAI API
 openai.api_key = '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'
 
@@ -28,16 +29,13 @@ def generate_recommendation(person, events):
 def generate_recommendations(persons, events):
     # prompt = f"Person: {person}\nAvailable events: {events}\nGenerate event recommendations in a bullet list format. Leave event names unchanged.\nLeave 4 most relevant events for specific person.\n"
     # print(prompt)
-    messages = [
-        {"role": "system",
-         "content": "Generate event recommendations for each provided person in a bullet list format. Leave event "
-                    "names unchanged.\nLeave 4 most relevant events for specific person. Leave only event names list in "
-                    "answer."},
-        {"role": "system", "content": f"Available events: {events}"},
-    ]
     recommendations = []
     for person in persons:
-        messages.append({"role": "user", "content": f"Person: {person}"})
+        messages = [{"role": "system",
+                     "content": "Generate event recommendations for each provided person in a bullet list format. Leave event "
+                                "names unchanged.\nLeave 4 most relevant events for specific person. Leave only event names list in "
+                                "answer."}, {"role": "system", "content": f"Available events: {events}"},
+                    {"role": "user", "content": f"Person: {person}"}]
         response = openai.ChatCompletion.create(
             model='gpt-3.5-turbo-16k',
             messages=messages,
@@ -47,14 +45,8 @@ def generate_recommendations(persons, events):
             timeout=60  # Увеличение времени ожидания ответа до 60 секунд
         )
         recommendations += [{persons.index(person): [choice['message']['content'] for choice in response.choices]}]
-        #print(recommendations[-1])
-        #time.sleep(20)
-
-        messages = [
-        {"role": "system",
-         "content": "Generate event recommendations for each provided person in a bullet list format. Leave event names unchanged.\nLeave 4 most relevant events for specific person."},
-        {"role": "system", "content": f"Available events: {events}"},
-    ]
+        # print(recommendations[-1])
+        # time.sleep(20)
 
     # Send prompt to ChatGPT API for generating recommendations
 
